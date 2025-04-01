@@ -1,46 +1,32 @@
-import numpy as np
+def sort_3x3_submatrices(matrix, R, C):
+    # Traverse each 3x3 submatrix
+    for i in range(0, R, 3):
+        for j in range(0, C, 3):
+            
+            # Extract 3x3 submatrix elements
+            submatrix = []
+            for x in range(3):
+                for y in range(3):
+                    submatrix.append(matrix[i + x][j + y])
 
-# Function to input a matrix
-def input_matrix(rows, cols):
-    print(f"Enter elements for a {rows}x{cols} matrix:")
-    matrix = []
-    for i in range(rows):
-        row = list(map(int, input().split()))
-        if len(row) != cols:
-            print("Error: Please enter the correct number of elements.")
-            return None
-        matrix.append(row)
-    return np.array(matrix)
+            # Sort the submatrix elements
+            submatrix.sort()
 
-# Matrix Operations
-def matrix_operations():
-    rows, cols = map(int, input("Enter rows and columns of the matrix: ").split())
+            # Put sorted values back into the matrix
+            idx = 0
+            for x in range(3):
+                for y in range(3):
+                    matrix[i + x][j + y] = submatrix[idx]
+                    idx += 1
 
-    # Input matrices
-    print("Matrix A:")
-    A = input_matrix(rows, cols)
-    print("Matrix B:")
-    B = input_matrix(rows, cols)
+# Read input
+R, C = map(int, input().split())  # Read R and C
+matrix = [list(map(int, input().strip())) for _ in range(R)]  # Read matrix
 
-    if A is None or B is None:
-        print("Invalid matrix input.")
-        return
+# Process the matrix
+sort_3x3_submatrices(matrix, R, C)
 
-    # Matrix operations
-    print("\nMatrix A:")
-    print(A)
-    print("\nMatrix B:")
-    print(B)
-    print("\nAddition (A + B):")
-    print(A + B)
-    print("\nSubtraction (A - B):")
-    print(A - B)
-    print("\nMultiplication (A * B):")
-    print(A @ B.T)  # Transposing B to make it valid for multiplication
-    print("\nTranspose of Matrix A:")
-    print(A.T)
-    print("\nTranspose of Matrix B:")
-    print(B.T)
+# Print output
+for row in matrix:
+    print(" ".join(map(str, row)))
 
-# Run the matrix operations
-matrix_operations()
